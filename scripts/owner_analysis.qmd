@@ -1,5 +1,23 @@
 ---
 title: "Owner Analysis"
 format: html
+author: Brooke Eastman
 ---
+
+## Exercise: Explore, Clean, and Wrangle Data
+
+```{r read packages}
+#| label: read packages
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r}
+lobster_abundance <- readr::read_csv(here::here("data", "Lobster_Abundance_All_Years_20240411.csv")) %>%
+    janitor::clean_names()
+```
+
+
 
