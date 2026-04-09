@@ -1,5 +1,50 @@
 ---
 title: "Collaborator Analysis"
 format: html
+author: Shaela
 ---
+## Exercise: Explore, Clean, and Wrangle Data
 
+```{r setup}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r read data}
+lobster_traps <- read_csv("data/Lobster_Trap_Counts_All_Years_20210519.csv")
+janitor::clean_names(lobster_traps)
+```
+
+```{r data exploration}
+colnames(lobster_traps)
+head(lobster_traps)
+summary(lobster_traps)
+```
+
+```{r convert NA}
+lobster_traps_na <- lobster_traps %>% 
+    mutate(TRAPS = na_if(TRAPS, -99999))
+unique(lobster_traps_na$TRAPS)
+```
+
+```{r filter out NAPL}
+lobster_no_NAPL <- lobster_traps_na %>% 
+    filter(SITE != "NAPL")
+unique(lobster_no_NAPL$SITE)
+```
+
+```{r filter to CARP and traps greater than 20}
+lobster_CARP_20 <- lobster_traps_na %>% 
+    filter(SITE == "CARP" & TRAPS >20)
+unique(lobster_CARP_20$SITE)
+summary(lobster_CARP_20)
+```
+
+```{r max traps each month by site}
+max_traps <- lobster_traps_na %>% 
+    group_by(SITE, MONTH) %>% 
+    summarize(max_traps = max(TRAPS, na.rm = TRUE),
+    .groups = 'drop')
+```
