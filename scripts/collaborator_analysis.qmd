@@ -1,5 +1,24 @@
 ---
 title: "Collaborator Analysis"
 format: html
+author: Shaela
 ---
+## Exercise: Explore, Clean, and Wrangle Data
 
+```{r setup}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r read data}
+lobster_traps <- read_csv("data/Lobster_Trap_Counts_All_Years_20210519.csv")
+janitor::clean_names(lobster_traps)
+```
+
+```{r data exploration}
+colnames(lobster_traps)
+head(lobster_traps)
+summary(lobster_traps)
+```
