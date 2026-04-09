@@ -22,3 +22,29 @@ colnames(lobster_traps)
 head(lobster_traps)
 summary(lobster_traps)
 ```
+
+```{r convert NA}
+lobster_traps_na <- lobster_traps %>% 
+    mutate(TRAPS = na_if(TRAPS, -99999))
+unique(lobster_traps_na$TRAPS)
+```
+
+```{r filter out NAPL}
+lobster_no_NAPL <- lobster_traps_na %>% 
+    filter(SITE != "NAPL")
+unique(lobster_no_NAPL$SITE)
+```
+
+```{r filter to CARP and traps greater than 20}
+lobster_CARP_20 <- lobster_traps_na %>% 
+    filter(SITE == "CARP" & TRAPS >20)
+unique(lobster_CARP_20$SITE)
+summary(lobster_CARP_20)
+```
+
+```{r max traps each month by site}
+max_traps <- lobster_traps_na %>% 
+    group_by(SITE, MONTH) %>% 
+    summarize(max_traps = max(TRAPS, na.rm = TRUE),
+    .groups = 'drop')
+```
